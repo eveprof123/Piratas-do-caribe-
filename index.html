@@ -1,1 +1,458 @@
-Piratas do caribe 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piratas do Caribe - Curiosidades e Aventuras</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #f4f4f4;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><path d="M0,200 Q300,100 600,200 T1200,200 L1200,400 L0,400 Z" fill="%23000"/></svg>');
+            background-size: cover;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '⚓';
+            position: absolute;
+            font-size: 8rem;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            50% { transform: translate(-50%, -55%) rotate(5deg); }
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+            color: #ffd700;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            margin: 1rem 0 0 0;
+            color: #e0e0e0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav {
+            background: rgba(0,0,0,0.8);
+            padding: 1rem 0;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #ffd700;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-link {
+            color: #ffd700;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border: 2px solid transparent;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            background: rgba(255,215,0,0.1);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: #ffd700;
+            color: #1a1a2e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,215,0,0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,215,0,0.3);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+        }
+
+        .card h2 {
+            color: #ffd700;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card h3 {
+            color: #ffeb3b;
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .video-container {
+            position: relative;
+            background: rgba(0,0,0,0.5);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px solid #ffd700;
+        }
+
+        .video-link {
+            display: inline-block;
+            background: #ffd700;
+            color: #1a1a2e;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .video-link:hover {
+            background: #ffed4e;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255,215,0,0.4);
+        }
+
+        .pirate-fact {
+            background: linear-gradient(45deg, rgba(139,69,19,0.3), rgba(160,82,45,0.3));
+            border-left: 4px solid #ffd700;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .skull-icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .treasure-box {
+            background: linear-gradient(45deg, #8b4513, #a0522d);
+            border: 3px solid #ffd700;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .treasure-box::before {
+            content: '💰';
+            position: absolute;
+            font-size: 3rem;
+            top: -10px;
+            right: -10px;
+            opacity: 0.3;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .footer {
+            background: rgba(0,0,0,0.9);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 2px solid #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.5rem; }
+            .nav-links { flex-direction: column; gap: 1rem; }
+            .container { padding: 1rem; }
+            .card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🏴‍☠️ Piratas do Caribe</h1>
+        <p>Descubra os segredos e mistérios dos mares</p>
+    </header>
+
+    <nav class="nav">
+        <div class="nav-links">
+            <a href="#" class="nav-link active" onclick="showSection('home')">🏠 Início</a>
+            <a href="#" class="nav-link" onclick="showSection('curiosidades')">🔍 Curiosidades</a>
+            <a href="#" class="nav-link" onclick="showSection('piratas')">⚔️ Piratas Famosos</a>
+            <a href="#" class="nav-link" onclick="showSection('videos')">🎬 Vídeos</a>
+            <a href="#" class="nav-link" onclick="showSection('links')">🔗 Links Úteis</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Seção Início -->
+        <section id="home" class="section active">
+            <div class="card">
+                <h2>⚓ Bem-vindos ao Mundo dos Piratas!</h2>
+                <p>Navegue pelos mares da história e descubra os segredos mais fascinantes sobre os piratas do Caribe. Desde lendas antigas até fatos surpreendentes, este é seu portal para o mundo da pirataria.</p>
+                
+                <div class="treasure-box">
+                    <h3>🗺️ O que você encontrará aqui:</h3>
+                    <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
+                        <li>Curiosidades incríveis sobre a vida pirata</li>
+                        <li>Histórias dos piratas mais famosos</li>
+                        <li>Vídeos documentários e entretenimento</li>
+                        <li>Links para aprofundar seus conhecimentos</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Curiosidades -->
+        <section id="curiosidades" class="section">
+            <div class="card">
+                <h2><span class="skull-icon">💀</span>Curiosidades Fascinantes</h2>
+                
+                <div class="pirate-fact">
+                    <h3>🦜 Papagaios eram realmente companheiros piratas?</h3>
+                    <p>Sim! Os piratas realmente mantinham papagaios como animais de estimação. Eles eram valiosos porque podiam ser vendidos por bom dinheiro nos portos, além de serem companheiros leais durante longas viagens.</p>
+                </div>
+
+                <div class="pirate-fact">
+                    <h3>🏴‍☠️ A verdade sobre a bandeira pirata</h3>
+                    <p>A famosa "Jolly Roger" não era universal. Cada capitão pirata tinha sua própria bandeira única. Blackbeard usava um esqueleto segurando uma ampulheta e uma lança apontada para um coração sangrando!</p>
+                </div>
+
+                <div class="pirate-fact">
+                    <h3>🦵 Pernas de pau eram comuns?</h3>
+                    <p>Na verdade, não! A imagem da perna de pau vem principalmente da ficção. Piratas feridos geralmente morriam ou eram abandonados, pois próteses eram raras e caras na época.</p>
+                </div>
+
+                <div class="pirate-fact">
+                    <h3>💰 Tesouros enterrados</h3>
+                    <p>Apenas um pirata famoso realmente enterrou seu tesouro: William Kidd. A maioria dos piratas gastava rapidamente suas riquezas em tavernas e diversões nos portos.</p>
+                </div>
+
+                <div class="pirate-fact">
+                    <h3>⚖️ Código dos Piratas</h3>
+                    <p>Os piratas tinham regras rígidas! O código incluía divisão justa do tesouro, compensação por ferimentos, e até mesmo horários para apagar as velas (8 da noite).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Piratas Famosos -->
+        <section id="piratas" class="section">
+            <div class="card">
+                <h2>⚔️ Piratas Lendários do Caribe</h2>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h3>🖤 Barba Negra (Edward Teach)</h3>
+                        <p><strong>Período:</strong> 1716-1718</p>
+                        <p>O mais temido pirata de todos os tempos. Amarrava mechas acesas em sua barba para parecer demoníaco em batalha. Comandava o navio "Queen Anne's Revenge" com 40 canhões.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>🌹 Anne Bonny</h3>
+                        <p><strong>Período:</strong> 1719-1720</p>
+                        <p>Uma das poucas mulheres piratas famosas. Conhecida por sua coragem e ferocidade em combate. Navegou ao lado de "Calico Jack" Rackham.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>🏴‍☠️ Capitão Henry Morgan</h3>
+                        <p><strong>Período:</strong> 1663-1674</p>
+                        <p>Corsário galês que se tornou lenda. Saqueou cidades inteiras como Panamá e Porto Bello. Mais tarde se tornou governador da Jamaica!</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>🗡️ "Calico Jack" Rackham</h3>
+                        <p><strong>Período:</strong> 1718-1720</p>
+                        <p>Famoso por sua bandeira com caveira e sabres cruzados, e por ter duas mulheres piratas em sua tripulação: Anne Bonny e Mary Read.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Vídeos -->
+        <section id="videos" class="section">
+            <div class="card">
+                <h2>🎬 Vídeos sobre Piratas do Caribe</h2>
+                
+                <div class="grid">
+                    <div class="video-container">
+                        <h3>📚 Documentários Históricos</h3>
+                        <p>Documentários sobre a verdadeira história dos piratas do Caribe</p>
+                        <a href="https://www.youtube.com/results?search_query=piratas+do+caribe+documentario+historia" target="_blank" rel="noopener noreferrer" class="video-link">
+                            🎥 Ver Documentários
+                        </a>
+                    </div>
+
+                    <div class="video-container">
+                        <h3>🎭 Filmes e Entretenimento</h3>
+                        <p>Os melhores filmes sobre piratas e aventuras marítimas</p>
+                        <a href="https://www.youtube.com/results?search_query=melhores+filmes+piratas+caribe" target="_blank" rel="noopener noreferrer" class="video-link">
+                            🍿 Ver Filmes
+                        </a>
+                    </div>
+
+                    <div class="video-container">
+                        <h3>🏴‍☠️ Barba Negra</h3>
+                        <p>Documentários específicos sobre o pirata mais temido</p>
+                        <a href="https://www.youtube.com/results?search_query=barba+negra+pirata+documentario" target="_blank" rel="noopener noreferrer" class="video-link">
+                            💀 Sobre Barba Negra
+                        </a>
+                    </div>
+
+                    <div class="video-container">
+                        <h3>🗺️ Tesouros Perdidos</h3>
+                        <p>Mistérios e buscas por tesouros piratas reais</p>
+                        <a href="https://www.youtube.com/results?search_query=tesouros+piratas+perdidos+caribe" target="_blank" rel="noopener noreferrer" class="video-link">
+                            💰 Caça ao Tesouro
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Links -->
+        <section id="links" class="section">
+            <div class="card">
+                <h2>🔗 Links Úteis para Explorar</h2>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h3>📖 Recursos Educacionais</h3>
+                        <ul>
+                            <li><a href="https://pt.wikipedia.org/wiki/Pirataria_no_Caribe" target="_blank" rel="noopener noreferrer">Wikipedia - Pirataria no Caribe</a></li>
+                            <li><a href="https://brasilescola.uol.com.br/historia/piratas.htm" target="_blank" rel="noopener noreferrer">Brasil Escola - História dos Piratas</a></li>
+                            <li><a href="https://www.historiadomundo.com.br/idade-moderna/piratas.htm" target="_blank" rel="noopener noreferrer">História do Mundo - Piratas</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>🏛️ Museus e Exposições</h3>
+                        <ul>
+                            <li><a href="https://www.piratemuseum.com/" target="_blank" rel="noopener noreferrer">Museu dos Piratas (EUA)</a></li>
+                            <li><a href="https://www.rmg.co.uk/national-maritime-museum" target="_blank" rel="noopener noreferrer">Museu Marítimo Nacional</a></li>
+                            <li><a href="https://www.blackbeard.com/" target="_blank" rel="noopener noreferrer">Site Oficial do Barba Negra</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>📚 Livros e Literatura</h3>
+                        <ul>
+                            <li><a href="https://www.amazon.com.br/s?k=livros+piratas+caribe" target="_blank" rel="noopener noreferrer">Livros sobre Piratas - Amazon</a></li>
+                            <li><a href="https://www.skoob.com.br/livros/busca?q=piratas" target="_blank" rel="noopener noreferrer">Skoob - Livros sobre Piratas</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>🎮 Jogos e Entretenimento</h3>
+                        <ul>
+                            <li><a href="https://store.steampowered.com/tags/en/Pirates/" target="_blank" rel="noopener noreferrer">Jogos de Piratas - Steam</a></li>
+                            <li><a href="https://www.ubisoft.com/pt-br/game/assassins-creed/black-flag" target="_blank" rel="noopener noreferrer">Assassin's Creed: Black Flag</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>🏴‍☠️ Explore os mares do conhecimento sobre piratas! ⚓</p>
+        <p>Site criado para fins educacionais e de entretenimento</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Esconder todas as seções
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remover classe active de todos os links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Mostrar a seção selecionada
+            document.getElementById(sectionId).classList.add('active');
+
+            // Adicionar classe active ao link clicado
+            event.target.classList.add('active');
+
+            // Scroll suave para o topo
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Adicionar efeito de parallax suave no header
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('.header');
+            header.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'986c85409376324a',t:'MTc1OTE1OTgxMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
